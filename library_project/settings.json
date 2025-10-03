@@ -1,0 +1,8 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "baseUrl": "http://localhost:8000/api",
+      "token": "12345"
+    }
+  }
+}
