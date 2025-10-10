@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('copies', function (Blueprint $table) {
             $table->id();
             $table->foreignId("book_id")->constrained("books");
-            $table->foreignId("user_id")->constrained("users");
+            //0: kemény, 1: puha
+            $table->boolean('hardcovered')->default(1)->nullable();
+            $table->year('publication');
+            //0: konyvtárban, 1: felh-nál, 2: selejt, 3: ?
+            $table->smallInteger('status')->default(0);
             $table->timestamps();
         });
     }
