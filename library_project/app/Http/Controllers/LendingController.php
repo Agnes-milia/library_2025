@@ -13,7 +13,7 @@ class LendingController extends Controller
      */
     public function index()
     {
-        //
+        return Lending::all();
     }
 
     /**
@@ -21,16 +21,24 @@ class LendingController extends Controller
      */
     public function store(StoreLendingRequest $request)
     {
-        //
+        $lending = new Lending();
+        $lending->fill($request->all());
+        $lending->save();
+        return response()->json($lending, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Lending $lending)
+    public function show ($user_id, $copy_id, $start)
     {
-        //
+        $lending = Lending::where('user_id', $user_id)
+        ->where('copy_id', $copy_id)
+        ->where('start', $start)
+        ->get();
+        return $lending[0];
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -43,8 +51,10 @@ class LendingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lending $lending)
+    public function destroy($user_id, $copy_id, $start)
     {
-        //
+        $lending = $this->show($user_id, $copy_id, $start);
+        $lending->delete();
+        return response()->json(NULL, 200);
     }
 }
