@@ -18,4 +18,5 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::get('/lendings', [LendingController::class, 'index']);
 Route::get('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
 Route::post('/lendings', [LendingController::class, 'store']);
+Route::put('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']);
 Route::delete('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'destroy']);

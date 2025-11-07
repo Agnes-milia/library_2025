@@ -43,9 +43,12 @@ class LendingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLendingRequest $request, Lending $lending)
+    public function update(UpdateLendingRequest $request, $user_id, $copy_id, $start)
     {
-        //
+        $lending = $this->show($user_id, $copy_id, $start);
+        $lending->fill($request->all());
+        $lending->save();
+        return response()->json($lending, 200);
     }
 
     /**

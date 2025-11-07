@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lendings', function (Blueprint $table) {
-            $table->primary(['user_id', 'copy_id', 'start']);
+        Schema::create('reservations', function (Blueprint $table) {
+            $table->primary(['book_id', 'user_id', 'start']);
+            $table->foreignId('book_id')->constrained("books");
             $table->foreignId('user_id')->constrained("users");
-            $table->foreignId('copy_id')->constrained("copies");
             $table->date('start')->default(now());
-            $table->date('end')->nullable();
-            $table->boolean('extension')->default(0);
-            $table->smallInteger('notice')->default(0);
+            $table->boolean('message')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lendings');
+        Schema::dropIfExists('reservations');
     }
 };

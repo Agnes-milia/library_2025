@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Copy;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lending>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
  */
-class LendingFactory extends Factory
+class ReservationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,12 +19,10 @@ class LendingFactory extends Factory
     public function definition(): array
     {
         return [
+            'book_id' => Book::all()->random()->id,
             'user_id' => User::all()->random()->id,
-            'copy_id' => Copy::all()->random()->id,
             "start" => fake()->date(),
-            "end" => fake()->date(),
-            "extension" => rand(0, 1),
-            "notice" => rand(0, 3)
+            "message" => rand(0, 1)
         ];
     }
 }
