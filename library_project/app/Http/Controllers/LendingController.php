@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLendingRequest;
 use App\Http\Requests\UpdateLendingRequest;
 use App\Models\Lending;
+use Illuminate\Support\Facades\Auth;
 
 class LendingController extends Controller
 {
@@ -59,5 +60,12 @@ class LendingController extends Controller
         $lending = $this->show($user_id, $copy_id, $start);
         $lending->delete();
         return response()->json(NULL, 200);
+    }
+
+    public function myLendingsWithCopies(){
+        $user = Auth::user();
+        return Lending::with("toCopies")
+        ->where('user_id', $user->id)
+        ->get();
     }
 }

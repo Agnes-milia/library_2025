@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Lending extends Model
 {
@@ -25,5 +26,9 @@ class Lending extends Model
             ->where('copy_id', '=', $this->getAttribute('copy_id'))
             ->where('start', '=', $this->getAttribute('start'));
         return $query;
+    }
+
+    public function toCopies(){
+        return $this->belongsTo(Copy::class, "copy_id", "id");
     }
 }

@@ -13,4 +13,10 @@ class Book extends Model
         'author',
         'title'
     ];
+
+    public function toCopies()
+    {    
+        return $this->hasMany(Copy::class);   
+    }
+
 }
