@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -54,4 +57,22 @@ class UserController extends Controller
         $user->delete();
         return response()->json(NULL, 200);
     }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        $validator = Validator::make($request->all(), 
+        [
+            "password" => array( 'required', 'regex:/^[a-zA-Z]+\d+$/u')
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->all()], 400);
+        }
+        $user->update([
+            "password" => Hash::make($request->password),
+        ]);
+        return response()->json($user, 200);
+    }
+
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLendingRequest;
 use App\Http\Requests\UpdateLendingRequest;
 use App\Models\Lending;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
@@ -67,5 +68,18 @@ class LendingController extends Controller
         return Lending::with("toCopies")
         ->where('user_id', $user->id)
         ->get();
+    }
+
+    //Azokat a kölcsönzéseket és példányokat nézzük meg, amik még aktívak (nálam van).
+    public function myLendingsAtMe(){
+        $user = Auth::user();
+        $lendings = DB::table("lendings as l")
+        ->join("copies as c", "l.copy_id", "c.id")
+        ->selectRaw("*")
+        ->where("user_id", $user->id)
+        ->whereNull("end")
+        ->get();
+
+        return $lendings;
     }
 }

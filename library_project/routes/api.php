@@ -15,20 +15,26 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 //bárki hozzáférhet
 
+Route::get('/special-authors/{spec}', [BookController::class, "specialAuthors"]);
 Route::post('/register',[RegisteredUserController::class, 'store']);
 Route::post('/login',[AuthenticatedSessionController::class, 'store']);
 
 //autentikált felh-ó
 Route::middleware(['auth:sanctum'])
 ->group(function () {
-    Route::get('/users/{id}', [UserController::class, 'show']);
+    
     Route::get("/my-lendings-with-copies", [LendingController::class, "myLendingsWithCopies"]);
+    Route::patch("/update-password", [UserController::class, "updatePassword"]);
+    Route::get("/my-lendings-at-me", [LendingController::class, "myLendingsAtMe"]);
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 });
 
 //admin
 Route::middleware(['auth:sanctum', Admin::class])
 ->group(function () {
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::get("/book-reserved-count/{id}", [BookController::class, "bookReservedCount"]);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/books-with-copies', [BookController::class, "booksWithCopies"]);
 });

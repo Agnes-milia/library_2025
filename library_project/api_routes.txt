@@ -9,3 +9,17 @@ Route::get('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, '
 Route::post('/lendings', [LendingController::class, 'store']);
 Route::put('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']);
 Route::delete('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'destroy']);
+
+public function updatePassword(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            "password" => 'string|min:3|max:50'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->all()], 400);
+        }
+        $user = User::where("id", $id)->update([
+            "password" => Hash::make($request->password),
+        ]);
+        return response()->json(["user" => $user]);
+    }
