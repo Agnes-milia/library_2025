@@ -12,6 +12,10 @@ class BookController extends Controller
         return Book::with("toCopies")->get();
     }
 
+    public function booksWithReservations(){
+        return Book::with("toReservations")->get();
+    }
+
     public function specialAuthors($speciality){
         return Book::where('author','LIKE', $speciality."%")->get();
     }

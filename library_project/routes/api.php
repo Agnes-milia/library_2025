@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CopyController;
 use App\Http\Controllers\LendingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\Admin;
@@ -35,8 +36,10 @@ Route::middleware(['auth:sanctum', Admin::class])
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::get("/book-reserved-count/{id}", [BookController::class, "bookReservedCount"]);
+    Route::get("/book-with-reservations", [BookController::class, "booksWithReservations"]);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/books-with-copies', [BookController::class, "booksWithCopies"]);
+    Route::get('/year-author-count/{year}/{author}', [CopyController::class, "yearAuthorCount"]);
 });
 
 

@@ -19,4 +19,9 @@ class Book extends Model
         return $this->hasMany(Copy::class);   
     }
 
+    public function toReservations()
+    {    
+        return $this->hasMany(Reservation::class, "book_id", "id");   
+    }
+
 }
