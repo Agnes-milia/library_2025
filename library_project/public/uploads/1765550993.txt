@@ -1,0 +1,19 @@
+értem:
+klónozás
+rout
+env, migrálás,
+TC,
+alap fg-ek,
+factory,
+csomagkezelő
+
+$mailData = [
+           'title' => 'Levél címe',
+           'body' => 'Levél törzse'
+       ]; 
+
+//levélküldés
+Route::get('send-mail', [MailController::class, 'index']);
+//file feltoltes
+Route::get('file-upload', [FileController::class, 'index']);
+Route::post('file-upload', [FileController::class, 'store'])->name('file.store');
