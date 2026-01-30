@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLendingRequest;
 use App\Http\Requests\UpdateLendingRequest;
+use App\Models\Copy;
 use App\Models\Lending;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -81,5 +82,27 @@ class LendingController extends Controller
         ->get();
 
         return $lendings;
+    }
+
+    public function bringBack($copy_id, $start){
+        $user = Auth::user();
+        DB::transaction(function () use ($user, $copy_id, $start) {
+            $lending = Lending::where('user_id', $user->id)
+                ->where('copy_id', $copy_id)
+                ->where('start', $start)
+                ->whereNull('end') //nincs visszahozva
+                ->firstOrFail(); //az egyetlen adat, ha van
+
+
+            $lending->update([
+                'end' => now(),
+            ]);
+
+
+            Copy::where('id', $copy_id)->update([
+                'status' => 0,
+            ]);
+        });
+
     }
 }
