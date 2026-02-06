@@ -12,9 +12,9 @@ class LendingObserver
      */
     public function created(Lending $lending): void
     {
-        DB::table("copies")
+        /* DB::table("copies")
         ->where('id', $lending->copy_id)
-        ->update(["status => 1"]);
+        ->update(["status => 1"]); */
     }
 
     /**

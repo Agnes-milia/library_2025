@@ -84,6 +84,10 @@ class LendingController extends Controller
         return $lendings;
     }
 
+    public function hasExample(){
+        return Lending::has('toCopies', ">=", 1)->get();
+    }
+
     public function bringBack($copy_id, $start){
         $user = Auth::user();
         DB::transaction(function () use ($user, $copy_id, $start) {
@@ -105,4 +109,10 @@ class LendingController extends Controller
         });
 
     }
+
+        public function rawExample($copy_id){
+            $results = DB::select(
+            "SELECT user_id, created_at FROM lendings WHERE copy_id = $copy_id");
+            return $results;
+        }
 }

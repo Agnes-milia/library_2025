@@ -12,13 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        /* DB::unprepared('CREATE TRIGGER from_library_t
-        AFTER INSERT ON lendings
-        FOR EACH ROW
-        BEGIN
-            UPDATE copies SET status = 1 WHERE id = NEW.copy_id;
-        END
-        '); */
+        DB::statement("CREATE OR REPLACE VIEW user_s as
+                SELECT * FROM users WHERE role=1");
     }
 
     /**
@@ -26,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS from_library_t');
+        DB::statement("DROP VIEW user_s");
     }
 };

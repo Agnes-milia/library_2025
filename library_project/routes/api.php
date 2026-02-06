@@ -15,7 +15,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 //bárki hozzáférhet
-
+Route::get("/view-example", [UserController::class, "viewExample"]);
+Route::get("/raw-example/{copy_id}", [LendingController::class, "RawExample"]);
+Route::get("/has-example", [LendingController::class, "hasExample"]);
 Route::get('/special-authors/{spec}', [BookController::class, "specialAuthors"]);
 Route::post('/register',[RegisteredUserController::class, 'store']);
 Route::post('/login',[AuthenticatedSessionController::class, 'store']);

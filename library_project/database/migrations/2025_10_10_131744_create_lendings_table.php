@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,6 +22,8 @@ return new class extends Migration
             $table->smallInteger('notice')->default(0);
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE lendings ADD CONSTRAINT check_dates CHECK(start > '2012-12-06')");
     }
 
     /**
