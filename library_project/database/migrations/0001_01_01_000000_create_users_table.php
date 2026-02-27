@@ -22,6 +22,7 @@ return new class extends Migration
             //0: admin, 1: user, 2: warehouseman, 3: ?
             $table->smallInteger("role")->default(1);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 

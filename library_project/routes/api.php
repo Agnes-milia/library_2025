@@ -21,6 +21,8 @@ Route::get("/has-example", [LendingController::class, "hasExample"]);
 Route::get('/special-authors/{spec}', [BookController::class, "specialAuthors"]);
 Route::post('/register',[RegisteredUserController::class, 'store']);
 Route::post('/login',[AuthenticatedSessionController::class, 'store']);
+Route::delete('/users/{id}',[UserController::class, 'destroy']);
+Route::get('/users',[UserController::class, 'index']);
 
 //autentikált felh-ó
 Route::middleware(['auth:sanctum'])
@@ -39,7 +41,7 @@ Route::middleware(['auth:sanctum', Admin::class])
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::get("/book-reserved-count/{id}", [BookController::class, "bookReservedCount"]);
     Route::get("/book-with-reservations", [BookController::class, "booksWithReservations"]);
-    Route::get('/users', [UserController::class, 'index']);
+    //Route::get('/users', [UserController::class, 'index']);
     Route::get('/books-with-copies', [BookController::class, "booksWithCopies"]);
     Route::get('/year-author-count/{year}/{author}', [CopyController::class, "yearAuthorCount"]);
 });
